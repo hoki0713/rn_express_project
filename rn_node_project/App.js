@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, YellowBox } from 'react-native';
+
+YellowBox.ignoreWarnings(['Remote debugger']);
 
 import Home from './screens/Home';
 import Todo from './screens/Todo';

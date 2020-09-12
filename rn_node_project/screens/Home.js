@@ -15,7 +15,7 @@ const Home = props => {
             <Text onPress={() => props.onTodo()}>오늘할일</Text>
           </Card>
           <Card style={styles.textContainer}>
-            <Text onPress={() => props.onDiary()}>오늘기록</Text>
+            <Text onPress={() => props.onDiary()}>하루기록</Text>
           </Card>
         </View>
       </View>
