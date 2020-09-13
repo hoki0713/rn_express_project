@@ -1,13 +1,15 @@
 import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import Card from "./Card";
 
 const NoteItem = (props) => {
   return (
-    <TouchableOpacity onPress={props.onDetail.bind(this. props.id)}>
+    <TouchableOpacity onPress={props.onDetail.bind(this, props.id)}>
       <Card style={styles.listItem}>
-        <Text>{props.title}</Text>
+        <View sytle={styles.textContainer}>
+          <Text>{props.note.date} : {props.note.title}</Text>
+        </View>
       </Card>
     </TouchableOpacity>
   );
