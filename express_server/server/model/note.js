@@ -6,12 +6,12 @@ mongoose.connect(url, { dbName: 'hoki-daily-log'},err => {
 });
 
 const Schema = mongoose.Schema;
-const diarySchema = new Schema({
+const noteSchema = new Schema({
   date: String,
   title: String,
   content: String
 });
 
-module.exports = mongoose.model('diary', diarySchema, 'diary');
+module.exports = mongoose.model('note', noteSchema, 'note');
 
 

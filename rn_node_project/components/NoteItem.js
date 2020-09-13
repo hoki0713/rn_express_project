@@ -5,7 +5,7 @@ import Card from "./Card";
 
 const NoteItem = (props) => {
   return (
-    <TouchableOpacity onPress={props.onDetail.bind(this, props.id)}>
+    <TouchableOpacity onPress={props.onDetail.bind(this, props.note)}>
       <Card style={styles.listItem}>
         <View sytle={styles.textContainer}>
           <Text>{props.note.date} : {props.note.title}</Text>

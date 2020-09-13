@@ -1,5 +1,5 @@
 const express = require('express');
-const data = require('../model/diary');
+const data = require('../model/note');
 const bodyParser = require('body-parser');
 const dateFormat = require('dateformat');
 const empty = require('is-empty');
@@ -11,20 +11,20 @@ router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
 
 router.get("/", (req, res) => {
-  data.find((error, diary) => {
+  data.find((error, note) => {
     let resultData = "";
-    if (!error && !empty(diary)) {
-      resultData = diary;
+    if (!error && !empty(note)) {
+      resultData = note;
     }
     res.json({ result: empty(error), error: error, data: resultData });
   });
 });
 
 router.get("/:id", (req, res) => {
-  data.findOne({_id: req.params.id }, (error, diary) => {
+  data.findOne({_id: req.params.id }, (error, note) => {
     let resultData = "";
-    if (!error && !empty(diary)) {
-      resultData = diary;
+    if (!error && !empty(note)) {
+      resultData = note;
     }
     res.json({ result: empty(error), error: error, data: resultData });
   });
@@ -35,15 +35,15 @@ router.post("/", (req, res) => {
   const content = req.body.content;
 
   if (!empty(title) && !empty(content)) {
-    const diaryData = new data();
-    diaryData.title = title;
-    diaryData.content = content;
+    const noteData = new data();
+    noteData.title = title;
+    noteData.content = content;
     const now = new Date();
-    diaryData.date = dateFormat(now, "yyyymmdd");
+    noteData.date = dateFormat(now, "yyyymmdd");
 
-    console.log("diary content diaryData::" + diaryData);
+    console.log("note content noteData::" + noteData);
 
-    diaryData.save((error, resultData) => {
+    noteData.save((error, resultData) => {
       res.json({ result: empty(error), error: error, data: resultData });
     });
   } else {

@@ -6,14 +6,12 @@ YellowBox.ignoreWarnings(['Remote debugger']);
 import Home from './screens/Home';
 import Todo from './screens/Todo';
 import Note from './screens/Note';
-import Writing from './screens/Writing';
 
 import Color from './constants/colors';
 
 export default function App() {
   const [isTodo, setIsTodo] = useState(false);
   const [istNote, setIsNote] = useState(false);
-  const [isWriting, setIsWriting] = useState(false);
 
   const todoHandler = () => {
     setIsTodo(true);
@@ -23,19 +21,16 @@ export default function App() {
   const NoteHandler = () => {
     setIsNote(true);
     setIsTodo(false);
-    setIsWriting(false);
   }
 
   const homeHandler = () => {
     setIsTodo(false);
     setIsNote(false);
-    setIsWriting(false);
   }
 
   const writingHandler = () => {
     setIsTodo(false);
     setIsNote(false);
-    setIsWriting(true);
   }
 
   let content = <Home onTodo={todoHandler} onNote={NoteHandler} />;
@@ -44,8 +39,6 @@ export default function App() {
     content = <Todo onHome={homeHandler}/>;
   } else if (istNote) {
     content = <Note onHome={homeHandler} onWriting={writingHandler}/>;
-  } else if (isWriting) {
-    content = <Writing onNote={NoteHandler}/>;
   }
 
   return (

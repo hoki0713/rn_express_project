@@ -15,7 +15,7 @@ const CustomModal = props => {
         onPress={() => Keyboard.dismiss()}
       >
         <View style={styles.mainContainer}>
-          <View style={styles.modalWrapper}>
+          <View style={{...styles.modalWrapper, ...props.style}}>
             <View style={styles.modalContainer}>
               {props.children}
             </View>

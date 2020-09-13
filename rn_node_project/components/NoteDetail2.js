@@ -1,56 +1,79 @@
-import Axios from "axios";
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
-import axios from 'axios';
+import axios from "axios";
 
 import Color from "../constants/colors";
 
-const Writing = (props) => {
+const NoteDetail2 = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
 
   const titleInputHandler = (enteredText) => {
     setEnteredTitle(enteredText);
-  }
+  };
 
   const contentInputHandler = (enteredText) => {
     setEnteredContent(enteredText);
-  }
+  };
 
-  const saveNoteHandler = () => {
+  const updateNoteHandler = () => {
     const data = {
       title: enteredTitle,
-      content: enteredContent
-    }
-    axios.post("http://10.0.2.2:5000/api/diary", data)
+      content: enteredContent,
+    };
+    axios
+      .put(`http://10.0.2.2:5000/api/note/${props.note._id}`, data)
       .then(() => {
         Alert.alert(
           "메모장",
-          "저장 성공",
+          "수정 성공",
           [
             {
               text: "Cancel",
               onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
+              style: "cancel",
             },
-            { text: "OK", onPress: () => props.onNote() }
+            { text: "OK", onPress: () => props.onNote() },
           ],
           { cancelable: false }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         throw error;
-      })
+      });
     setEnteredTitle("");
     setEnteredContent("");
-  }
+  };
+
+  const deleteNoteHandler = () => {
+    axios
+      .delete(`http://10.0.2.2:5000/api/note/${props.note._id}`)
+      .then(() => {
+        Alert.alert(
+          "메모장",
+          "삭제 성공",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel",
+            },
+            { text: "OK", onPress: () => props.onNote() },
+          ],
+          { cancelable: false }
+        );
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
 
   return (
     <View style={styles.screen}>
-      <TextInput 
-        style={styles.title} 
+      <TextInput
+        style={styles.title}
         placeholder="Title"
-        onChangeText={titleInputHandler} 
+        onChangeText={titleInputHandler}
       />
       <TextInput
         style={styles.content}
@@ -60,18 +83,17 @@ const Writing = (props) => {
         onChangeText={contentInputHandler}
       />
       <View style={styles.buttonContainer}>
-        <View style={{width: 100}}>
-          <Button 
-            color={Color.save} 
-            title="저장"
-            onPress={saveNoteHandler} 
-          />
+        <View style={{ width: 70 }}>
+          <Button color={Color.ok} title="확인" onPress={() => props.onOk()} />
         </View>
-        <View style={{width: 100}}>
-          <Button 
-            color={Color.cancel} 
-            title="취소"
-            onPress={() => props.onNote()} 
+        <View style={{ width: 70 }}>
+          <Button color={Color.save} title="수정" onPress={updateNoteHandler} />
+        </View>
+        <View style={{ width: 70 }}>
+          <Button
+            color={Color.cancel}
+            title="삭제"
+            onPress={deleteNoteHandler}
           />
         </View>
       </View>
@@ -105,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Writing;
+export default NoteDetail2;
