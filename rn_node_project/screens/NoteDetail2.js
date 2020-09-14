@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TextInput, Button, Alert } from "react-native";
 import axios from "axios";
 
 import Color from "../constants/colors";
 
-const NoteDetail2 = (props) => {
+const NoteDetail2 = ({ navigation }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
+
+  useEffect(() => {
+    setEnteredTitle(navigation.getParam('title'));
+    setEnteredContent(navigation.getParam('content'));
+  },[])
 
   const titleInputHandler = (enteredText) => {
     setEnteredTitle(enteredText);
@@ -22,7 +27,7 @@ const NoteDetail2 = (props) => {
       content: enteredContent,
     };
     axios
-      .put(`http://10.0.2.2:5000/api/note/${props.note._id}`, data)
+      .put(`http://10.0.2.2:5000/api/note/${navigation.getParam('_id')}`, data)
       .then(() => {
         Alert.alert(
           "메모장",
@@ -33,7 +38,7 @@ const NoteDetail2 = (props) => {
               onPress: () => console.log("Cancel Pressed"),
               style: "cancel",
             },
-            { text: "OK", onPress: () => props.onNote() },
+            { text: "OK", onPress: () => navigation.navigate('note') },
           ],
           { cancelable: false }
         );
@@ -47,7 +52,7 @@ const NoteDetail2 = (props) => {
 
   const deleteNoteHandler = () => {
     axios
-      .delete(`http://10.0.2.2:5000/api/note/${props.note._id}`)
+      .delete(`http://10.0.2.2:5000/api/note/${navigation.getParam('_id')}`)
       .then(() => {
         Alert.alert(
           "메모장",
@@ -58,7 +63,7 @@ const NoteDetail2 = (props) => {
               onPress: () => console.log("Cancel Pressed"),
               style: "cancel",
             },
-            { text: "OK", onPress: () => props.onNote() },
+            { text: "OK", onPress: () => navigation.navigate('note') },
           ],
           { cancelable: false }
         );
@@ -73,6 +78,7 @@ const NoteDetail2 = (props) => {
       <TextInput
         style={styles.title}
         placeholder="Title"
+        value={enteredTitle}
         onChangeText={titleInputHandler}
       />
       <TextInput
@@ -80,11 +86,12 @@ const NoteDetail2 = (props) => {
         multiline={true}
         numberOfLines={15}
         placeholder="Content"
+        value={enteredContent}
         onChangeText={contentInputHandler}
       />
       <View style={styles.buttonContainer}>
         <View style={{ width: 70 }}>
-          <Button color={Color.ok} title="확인" onPress={() => props.onOk()} />
+          <Button color={Color.ok} title="확인" onPress={() => navigation.navigate('note')} />
         </View>
         <View style={{ width: 70 }}>
           <Button color={Color.save} title="수정" onPress={updateNoteHandler} />
@@ -104,6 +111,10 @@ const NoteDetail2 = (props) => {
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.general
   },
   title: {
     width: 300,

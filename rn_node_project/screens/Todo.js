@@ -70,6 +70,10 @@ const Todo = (props) => {
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.general
   },
   buttonContainer: {
     flexDirection: "row",

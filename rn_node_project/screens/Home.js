@@ -1,21 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
+import Color from '../constants/colors';
 import Logo from "../components/Logo";
 import Card from "../components/Card";
 
-const Home = props => {
+const Home = ({ navigation }) => {
   return (
-    <View>
+    <View style={styles.screen}>
       <View style={styles.logoContainer}>
         <Logo />
         <Text style={styles.title}>하루.기록</Text>
         <View style={styles.cardContainer}>
           <Card style={styles.textContainer}>
-            <Text onPress={() => props.onTodo()}>오늘할일</Text>
+            <Text onPress={() => navigation.navigate('todo')}>오늘할일</Text>
           </Card>
           <Card style={styles.textContainer}>
-            <Text onPress={() => props.onNote()}>메모장</Text>
+            <Text onPress={() => navigation.navigate('note')}>메모장</Text>
           </Card>
         </View>
       </View>
@@ -24,6 +25,12 @@ const Home = props => {
 };
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.general
+  },
   logoContainer: {
     alignItems: "center",
   },

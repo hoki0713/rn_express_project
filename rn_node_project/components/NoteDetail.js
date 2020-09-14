@@ -19,8 +19,9 @@ const NoteDetail = (props) => {
 
   
   useEffect(() => {
+    console.log(props)
     axios
-      .get(`http://10.0.2.2:5000/api/note/${props.note._id}`)
+      .get(`http://10.0.2.2:5000/api/note/${props._id}`)
       .then(res => {
         setEnteredTitle(res.data.data.title);
         setEnteredContent(res.data.data.content);
@@ -28,7 +29,7 @@ const NoteDetail = (props) => {
       .catch(error => {
         throw error;
       })
-  },[props.item])
+  },[])
 
   const updateNoteHandler = () => {
     const data = {
@@ -36,7 +37,7 @@ const NoteDetail = (props) => {
       content: enteredContent,
     };
     axios
-      .put(`http://10.0.2.2:5000/api/note/${props.note._id}`, data)
+      .put(`http://10.0.2.2:5000/api/note/${props._id}`, data)
       .then(() => {
         Alert.alert(
           "메모장",
@@ -61,7 +62,7 @@ const NoteDetail = (props) => {
 
   const deleteNoteHandler = () => {
     axios
-      .delete(`http://10.0.2.2:5000/api/note/${props.note._id}`)
+      .delete(`http://10.0.2.2:5000/api/note/${props._id}`)
       .then(() => {
         Alert.alert(
           "메모장",
