@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { View, TextInput, StyleSheet, Button, Alert } from "react-native";
 import axios from 'axios';
 
@@ -44,6 +44,7 @@ const NoteInput = (props) => {
       });
     setEnteredTitle("");
     setEnteredContent("");
+    props.onAdd();
   };
 
   return (

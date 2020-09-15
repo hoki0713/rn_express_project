@@ -1,14 +1,9 @@
 const express = require('express');
 const data = require('../model/note');
-const bodyParser = require('body-parser');
 const dateFormat = require('dateformat');
 const empty = require('is-empty');
-const stringify = require('json-stringify-pretty-compact');
 
 const router = express.Router();
-
-router.use(bodyParser.urlencoded({extended: false}));
-router.use(bodyParser.json());
 
 router.get("/", (req, res) => {
   data.find((error, note) => {

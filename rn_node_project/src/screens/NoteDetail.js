@@ -7,6 +7,7 @@ import Color from "../constants/colors";
 const NoteDetail2 = ({ navigation }) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredContent, setEnteredContent] = useState("");
+  const refreshNotes = navigation.getParam('refreshNotes');
 
   useEffect(() => {
     setEnteredTitle(navigation.getParam('title'));
@@ -48,6 +49,7 @@ const NoteDetail2 = ({ navigation }) => {
       });
     setEnteredTitle("");
     setEnteredContent("");
+    refreshNotes();
   };
 
   const deleteNoteHandler = () => {
@@ -71,6 +73,7 @@ const NoteDetail2 = ({ navigation }) => {
       .catch((error) => {
         throw error;
       });
+    refreshNotes();
   };
 
   return (
