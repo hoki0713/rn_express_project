@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, TextInput, StyleSheet, Button, Alert } from "react-native";
+import React, {useState} from "react";
+import {View, TextInput, StyleSheet, Button, Alert} from "react-native";
 import axios from 'axios';
 
 import Color from "../constants/colors";
@@ -34,9 +34,9 @@ const NoteInput = (props) => {
               onPress: () => console.log("Cancel Pressed"),
               style: "cancel",
             },
-            { text: "OK", onPress: () => props.onCancel() },
+            {text: "OK", onPress: () => props.onCancel()},
           ],
-          { cancelable: false }
+          {cancelable: false}
         );
       })
       .catch((error) => {
@@ -69,21 +69,21 @@ const NoteInput = (props) => {
           onChangeText={contentInputHandler}
         />
         <View style={styles.buttonContainer}>
-        <View style={{ width: 70 }}>
-          <Button 
-            color={Color.save} 
-            title="저장" 
-            onPress={saveNoteHandler} 
-          />
+          <View style={{width: 70}}>
+            <Button
+              color={Color.save}
+              title="저장"
+              onPress={saveNoteHandler}
+            />
+          </View>
+          <View style={{width: 70}}>
+            <Button
+              color={Color.cancel}
+              title="취소"
+              onPress={() => props.onCancel()}
+            />
+          </View>
         </View>
-        <View style={{ width: 70 }}>
-          <Button
-            color={Color.cancel}
-            title="취소"
-            onPress={() => props.onCancel()}
-          />
-        </View>
-      </View>
       </View>
     </CustomModal>
   );

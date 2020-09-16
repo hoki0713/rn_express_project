@@ -66,7 +66,11 @@ const Note = ({ navigation }) => {
           onPress={() => setIsAddMode(true)}
         />
       </View>
-      <NoteInput visible={isAddMode} onCancel={() => setIsAddMode(false)} onAdd={refreshNotes} />
+      <NoteInput
+        visible={isAddMode}
+        onCancel={() => setIsAddMode(false)}
+        onAdd={refreshNotes}
+      />
     </View>
   );
 };

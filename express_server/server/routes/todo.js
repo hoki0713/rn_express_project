@@ -6,25 +6,34 @@ const empty = require('is-empty');
 const router = express.Router();
 
 router.post("/", (req, res) => {
-  console.log(req.body);
   const date = req.body.date;
   const todoList = req.body.todos.map((todo) => ({
     checked: todo.checked,
     content: todo.content
   }));
 
-  if (!empty(todoList)) {
-    const todoData = new data();
-    todoData.date = date;
-    todoData.todoList = todoList;
+  data.findOne({date: date}, (error, todo) => {
+    if (!error && !empty(todo)) {
+      todo.todoList = [...todo.todoList, ...todoList];
+      todo.save((error, resultData) => {
+        res.json({result: empty(error), error: error, data: resultData});
+      })
+    } else {
+      if (!empty(todoList)) {
+        const todoData = new data();
+        todoData.date = date;
+        todoData.todoList = todoList;
 
-    todoData.save((error, resultData) => {
-      res.json({result: empty(error), error: error, data: resultData});
-    });
-  } else {
-    res.json({result: false, error: null, data: null});
-  }
+        todoData.save((error, resultData) => {
+          res.json({result: empty(error), error: error, data: resultData});
+        });
+      } else {
+        res.json({result: false, error: null, data: null});
+      }
+    }
+  });
 });
+
 
 router.get("/:date", (req, res) => {
   data.findOne({date: req.params.date}, (error, todo) => {
@@ -36,6 +45,7 @@ router.get("/:date", (req, res) => {
   });
 });
 
+
 router.put("/:date/:todoId", (req, res) => {
   const todoItemChecked = req.body.checked;
   const todoItemContent = req.body.content;
@@ -46,12 +56,29 @@ router.put("/:date/:todoId", (req, res) => {
       todo.todoList.id(req.params.todoId).checked = todoItemChecked;
       todo.todoList.id(req.params.todoId).content = todoItemContent;
 
-      data.updateOne(todo, (error, doc) => {
-        res.json({result: !error, error: error});
+      todo.save((error, resultData) => {
+        res.json({result: empty(error), error: error, data: resultData});
       });
 
     } else {
       res.json({result: false, error: null, data: null});
+    }
+  });
+});
+
+router.delete("/:date/:todoId", (req, res) => {
+  const date = req.params.date;
+  const id = req.params.todoId;
+
+  data.findOne({date: date},
+    (error, todo) => {
+    if(!error && !empty(todo)) {
+      todo.todoList.pull({_id: id});
+      todo.save((error, resultData) => {
+        res.json({result: empty(error), error: error, data: resultData});
+      });
+    } else {
+      res.json({ result: false, error: null, data: null });
     }
   });
 });

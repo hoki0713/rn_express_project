@@ -6,6 +6,7 @@ const empty = require('is-empty');
 const router = express.Router();
 
 router.get("/", (req, res) => {
+  console.log("get")
   data.find((error, note) => {
     let resultData = "";
     if (!error && !empty(note)) {
